@@ -9,8 +9,30 @@ import NewUser from "./pages/newUser/NewUser";
 import MovieList from "./pages/movieList/MovieList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
+import LoginPage from "./pages/login/Login.jsx";
 
 function App() {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/(login)" component={LoginContainer} />
+        <Route component={DefaultContainer} />
+      </Switch>
+    </Router>
+  );
+}
+
+const LoginContainer = () => {
+  return (
+    <Router>
+      <Switch>
+        <LoginPage />
+      </Switch>
+    </Router>
+  );
+};
+
+const DefaultContainer = () => {
   return (
     <Router>
       <Topbar />
@@ -20,6 +42,7 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
+
           <Route path="/users">
             <UserList />
           </Route>
@@ -42,6 +65,6 @@ function App() {
       </div>
     </Router>
   );
-}
+};
 
 export default App;
