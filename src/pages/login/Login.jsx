@@ -1,14 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import "./login.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/auth/AuthContext";
+import { login } from "../../context/auth/apiCalls";
 
 const LoginPage = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const { isFetching, dispatch } = useContext(AuthContext);
+
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(email);
-    console.log(password);
+    login({ email, password }, dispatch);
   };
   return (
     <div className="login">
@@ -33,7 +36,9 @@ const LoginPage = () => {
           </div>
 
           <div id="button" className="row">
-            <button onClick={handleLogin}>Log in</button>
+            <button onClick={handleLogin} disabled={isFetching}>
+              Log in
+            </button>
           </div>
         </div>
         <OtherMethods />

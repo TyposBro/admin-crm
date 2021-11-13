@@ -2,7 +2,12 @@ import Sidebar from "./components/sidebar/Sidebar";
 import Topbar from "./components/topbar/Topbar";
 import "./App.css";
 import Home from "./pages/home/Home";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import UserList from "./pages/userList/UserList";
 import User from "./pages/user/User";
 import NewUser from "./pages/newUser/NewUser";
@@ -10,13 +15,18 @@ import MovieList from "./pages/movieList/MovieList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
 import LoginPage from "./pages/login/Login.jsx";
+import { useContext } from "react";
+import { AuthContext } from "./context/auth/AuthContext";
 
 function App() {
+  const { user } = useContext(AuthContext);
   return (
     <Router>
       <Switch>
-        <Route exact path="/(login)" component={LoginContainer} />
-        <Route component={DefaultContainer} />
+        <Route exact path="/(login)">
+          {user ? <Redirect to="/" /> : <LoginPage />}
+        </Route>
+        <Route component={user ? DefaultContainer : LoginContainer} />
       </Switch>
     </Router>
   );
