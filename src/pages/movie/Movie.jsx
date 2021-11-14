@@ -47,7 +47,7 @@ export default function Movie() {
             <label>Movie title</label>
             <input type="text" placeholder={movie.title} />
             <label>Description</label>
-            <textarea rows="4" cols="30"></textarea>
+            <textarea placeholder={movie.desc} rows="4" cols="30"></textarea>
             <label>Year</label>
             <input type="number" placeholder={movie.year} />
             <label>Age limit</label>

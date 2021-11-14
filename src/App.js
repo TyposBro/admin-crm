@@ -13,7 +13,7 @@ import User from "./pages/user/User";
 import NewUser from "./pages/newUser/NewUser";
 import MovieList from "./pages/movieList/MovieList";
 import Movie from "./pages/movie/Movie";
-import NewProduct from "./pages/newProduct/NewProduct";
+import NewMovie from "./pages/newMovie/NewMovie";
 import LoginPage from "./pages/login/Login.jsx";
 import { useContext } from "react";
 import { AuthContext } from "./context/auth/AuthContext";
@@ -68,8 +68,8 @@ const DefaultContainer = () => {
           <Route path="/movie/:movieId">
             <Movie />
           </Route>
-          <Route path="/newproduct">
-            <NewProduct />
+          <Route path="/newmovie">
+            <NewMovie />
           </Route>
         </Switch>
       </div>
