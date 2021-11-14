@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import "./newMovie.css";
+import { storage } from "../../firebase";
 
 export default function NewMovie() {
   const [movie, setMovie] = useState({});
@@ -8,10 +10,57 @@ export default function NewMovie() {
   const [imgTitle, setImgTitle] = useState(null);
   const [trailer, setTrailer] = useState(null);
   const [video, setVideo] = useState(null);
+  const [uploaded, setUploaded] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   const handleChange = (e) => {
     const value = e.target.value;
     setMovie({ ...movie, [e.target.name]: value });
+  };
+
+  const upload = (items) => {
+    items.forEach((item) => {
+      const storageRef = ref(storage, `items/${item.file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, item.file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            setMovie((prev) => {
+              return { ...prev, [item.label]: url };
+            });
+            console.log(`${item.label}:`, url);
+            console.log(movie);
+          });
+
+          setUploaded((prev) => prev + 1);
+        }
+      );
+    });
+  };
+
+  const foo = () => {
+    console.log(movie);
+  };
+
+  const handleUpload = (e) => {
+    e.preventDefault();
+    upload([
+      { file: img, label: "img" },
+      { file: imgTitle, label: "imgTitle" },
+      { file: imgSmall, label: "imgSmall" },
+      { file: trailer, label: "trailer" },
+      { file: video, label: "video" },
+    ]);
   };
 
   return (
@@ -124,7 +173,15 @@ export default function NewMovie() {
             onChange={(e) => setVideo(e.target.files[0])}
           />
         </div>
-        <button className="addProductButton">Create</button>
+        {uploaded === 5 ? (
+          <button className="addProductButton" onClick={foo}>
+            Create
+          </button>
+        ) : (
+          <button className="addProductButton" onClick={handleUpload}>
+            Upload
+          </button>
+        )}
       </form>
     </div>
   );
