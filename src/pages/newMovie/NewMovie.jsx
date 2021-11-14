@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import "./newMovie.css";
 import { storage } from "../../firebase";
+import { createMovie } from "../../context/movie/apiCalls";
+import { MoviesContext } from "../../context/movie/MovieContext";
 
 export default function NewMovie() {
+  const { dispatch } = useContext(MoviesContext);
   const [movie, setMovie] = useState({});
   const [img, setImg] = useState(null);
   const [imgSmall, setImgSmall] = useState(null);
@@ -11,7 +14,6 @@ export default function NewMovie() {
   const [trailer, setTrailer] = useState(null);
   const [video, setVideo] = useState(null);
   const [uploaded, setUploaded] = useState(0);
-  const [progress, setProgress] = useState(0);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -48,9 +50,9 @@ export default function NewMovie() {
     });
   };
 
-  const foo = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(movie);
+    createMovie(movie, dispatch);
   };
 
   const handleUpload = (e) => {
@@ -175,7 +177,7 @@ export default function NewMovie() {
           />
         </div>
         {uploaded === 5 ? (
-          <button className="addProductButton" onClick={foo}>
+          <button className="addProductButton" onClick={handleSubmit}>
             Create
           </button>
         ) : (

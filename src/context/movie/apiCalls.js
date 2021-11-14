@@ -8,6 +8,9 @@ import {
   deleteMovieStart,
   deleteMovieFailure,
   deleteMovieSuccess,
+  createMovieStart,
+  createMovieSuccess,
+  createMovieFailure,
 } from "./MovieActions";
 
 export const getMovies = async (dispatch) => {
@@ -35,5 +38,19 @@ export const deleteMovie = async (id, dispatch) => {
     dispatch(deleteMovieSuccess(id));
   } catch (error) {
     dispatch(deleteMovieFailure());
+  }
+};
+
+export const createMovie = async (movie, dispatch) => {
+  dispatch(createMovieStart());
+  const token = JSON.parse(localStorage.getItem("user")).token;
+
+  try {
+    const { data } = await axios.post(`/movies`, movie, {
+      headers: { token },
+    });
+    dispatch(createMovieSuccess(data));
+  } catch (error) {
+    dispatch(createMovieFailure());
   }
 };

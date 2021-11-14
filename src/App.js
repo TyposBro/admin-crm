@@ -23,8 +23,8 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/(login)">
-          {user ? <Redirect to="/" /> : <LoginPage />}
+        <Route exact path="/login">
+          <LoginPage />
         </Route>
         <Route component={user ? DefaultContainer : LoginContainer} />
       </Switch>
