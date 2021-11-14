@@ -48,7 +48,8 @@ export default function NewMovie() {
     });
   };
 
-  const foo = () => {
+  const foo = (e) => {
+    e.preventDefault();
     console.log(movie);
   };
 
