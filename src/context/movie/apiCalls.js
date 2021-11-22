@@ -63,11 +63,13 @@ export const updateMovie = async (movie, dispatch) => {
   const token = JSON.parse(localStorage.getItem("user")).token;
 
   try {
-    const { data } = await axios.put(`/movies`, movie, {
+    const { data } = await axios.put(`/movies/${movie._id}`, movie, {
       headers: { token },
     });
     dispatch(updateMovieSuccess(data));
+    return true;
   } catch (error) {
     dispatch(updateMovieFailure());
+    return false;
   }
 };

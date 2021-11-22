@@ -1,15 +1,17 @@
 import "./movieList.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { productRows } from "../../dummyData";
+
 import { Link } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { MoviesContext } from "../../context/movie/MovieContext";
 import { deleteMovie, getMovies } from "../../context/movie/apiCalls.js";
+import { useState } from "react";
 
 export default function MovieList() {
   // const [data, setData] = useState(productRows);
   const { movies, dispatch } = useContext(MoviesContext);
+  const [pageSize, setPageSize] = useState(8);
 
   useEffect(() => {
     getMovies(dispatch);
@@ -69,7 +71,9 @@ export default function MovieList() {
         rows={movies}
         disableSelectionOnClick
         columns={columns}
-        pageSize={8}
+        pageSize={pageSize}
+        rowsPerPageOptions={[5, 8, 10, 50]}
+        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         checkboxSelection
         getRowId={(r) => r._id}
       />
