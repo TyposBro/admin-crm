@@ -2,11 +2,29 @@ import { Link, useLocation } from "react-router-dom";
 import "./movie.css";
 
 import { Publish } from "@material-ui/icons";
+import { useState } from "react";
 
 export default function Movie() {
   const location = useLocation();
   const movie = location.state.movie;
-  console.log(movie);
+  const [movieState, setMovie] = useState({});
+  const [img, setImg] = useState(null);
+  const [imgSmall, setImgSmall] = useState(null);
+  const [imgTitle, setImgTitle] = useState(null);
+  const [trailer, setTrailer] = useState(null);
+  const [video, setVideo] = useState(null);
+  const [uploaded, setUploaded] = useState(0);
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setMovie({ ...movieState, [e.target.name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(movieState);
+  };
+
   return (
     <div className="product">
       <div className="productTitleContainer">

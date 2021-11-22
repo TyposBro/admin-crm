@@ -11,6 +11,7 @@ const LoginPage = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+
     login({ username, password }, dispatch);
   };
   return (
