@@ -59,7 +59,6 @@ export default function Sidebar() {
                 Lists
               </li>
             </Link>
-            s
             <li className="sidebarListItem">
               <BarChart className="sidebarIcon" />
               Reports
