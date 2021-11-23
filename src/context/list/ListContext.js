@@ -3,28 +3,28 @@ import reducers from "./ListReducers";
 import { createContext, useReducer } from "react";
 
 const INITIAL_STATE = {
-  movies: [],
+  lists: [],
   isFetching: false,
   error: false,
 };
 
-export const MoviesContext = createContext(INITIAL_STATE);
+export const ListsContext = createContext(INITIAL_STATE);
 
-const MoviesContextProvider = ({ children }) => {
+const ListsContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducers, INITIAL_STATE);
 
   return (
-    <MoviesContext.Provider
+    <ListsContext.Provider
       value={{
-        movies: state.movies,
+        lists: state.lists,
         isFetching: state.isFetching,
         error: state.error,
         dispatch,
       }}
     >
       {children}
-    </MoviesContext.Provider>
+    </ListsContext.Provider>
   );
 };
 
-export default MoviesContextProvider;
+export default ListsContextProvider;

@@ -2,74 +2,74 @@ import axios from "../../utils/axios";
 // import axios from "axios";
 
 import {
-  getMoviesStart,
-  getMoviesSuccess,
-  getMoviesFailure,
-  deleteMovieStart,
-  deleteMovieFailure,
-  deleteMovieSuccess,
-  createMovieStart,
-  createMovieSuccess,
-  createMovieFailure,
-  updateMovieStart,
-  updateMovieSuccess,
-  updateMovieFailure,
-} from "./MovieActions";
+  getListsStart,
+  getListsSuccess,
+  getListsFailure,
+  deleteListStart,
+  deleteListFailure,
+  deleteListSuccess,
+  createListStart,
+  createListSuccess,
+  createListFailure,
+  updateListStart,
+  updateListSuccess,
+  updateListFailure,
+} from "./ListActions";
 
-export const getMovies = async (dispatch) => {
-  dispatch(getMoviesStart());
+export const getLists = async (dispatch) => {
+  dispatch(getListsStart());
   const token = JSON.parse(localStorage.getItem("user")).token;
 
   try {
-    const { data } = await axios.get("/movies", {
+    const { data } = await axios.get("/lists", {
       headers: { token },
     });
-    dispatch(getMoviesSuccess(data));
+    dispatch(getListsSuccess(data));
   } catch (error) {
-    dispatch(getMoviesFailure());
+    dispatch(getListsFailure());
   }
 };
 
-export const deleteMovie = async (id, dispatch) => {
-  dispatch(deleteMovieStart());
+export const deleteList = async (id, dispatch) => {
+  dispatch(deleteListStart());
   const token = JSON.parse(localStorage.getItem("user")).token;
 
   try {
-    await axios.delete(`/movies/${id}`, {
+    await axios.delete(`/lists/${id}`, {
       headers: { token },
     });
-    dispatch(deleteMovieSuccess(id));
+    dispatch(deleteListSuccess(id));
   } catch (error) {
-    dispatch(deleteMovieFailure());
+    dispatch(deleteListFailure());
   }
 };
 
-export const createMovie = async (movie, dispatch) => {
-  dispatch(createMovieStart());
+export const createList = async (list, dispatch) => {
+  dispatch(createListStart());
   const token = JSON.parse(localStorage.getItem("user")).token;
 
   try {
-    const { data } = await axios.post(`/movies`, movie, {
+    const { data } = await axios.post(`/lists`, list, {
       headers: { token },
     });
-    dispatch(createMovieSuccess(data));
+    dispatch(createListSuccess(data));
   } catch (error) {
-    dispatch(createMovieFailure());
+    dispatch(createListFailure());
   }
 };
 
-export const updateMovie = async (movie, dispatch) => {
-  dispatch(updateMovieStart());
+export const updateList = async (list, dispatch) => {
+  dispatch(updateListStart());
   const token = JSON.parse(localStorage.getItem("user")).token;
 
   try {
-    const { data } = await axios.put(`/movies/${movie._id}`, movie, {
+    const { data } = await axios.put(`/lists/${list._id}`, list, {
       headers: { token },
     });
-    dispatch(updateMovieSuccess(data));
+    dispatch(updateListSuccess(data));
     return true;
   } catch (error) {
-    dispatch(updateMovieFailure());
+    dispatch(updateListFailure());
     return false;
   }
 };

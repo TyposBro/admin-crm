@@ -12,16 +12,23 @@ export default function Movie() {
   const location = useLocation();
   const history = useHistory();
   const [movie, setMovie] = useState(location.state.movie);
-  const [img, setImg] = useState(null);
-  const [imgSmall, setImgSmall] = useState(null);
-  const [imgTitle, setImgTitle] = useState(null);
-  const [trailer, setTrailer] = useState(null);
-  const [video, setVideo] = useState(null);
   const [ready, setReady] = useState(null);
+  const [files, setFiles] = useState([]);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const handleChange = (e) => {
     const value = e.target.value;
     setMovie({ ...movie, [e.target.name]: value });
+    if (files.length === 0) {
+      setReady(true);
+    }
+  };
+
+  const handleFilesChange = (e) => {
+    const file = e.target.files[0];
+    const label = e.target.id;
+    setFiles([...files, { file, label }]);
+    setReady(false);
   };
 
   const handleSubmit = async (e) => {
@@ -36,29 +43,13 @@ export default function Movie() {
 
   const handleUpload = (e) => {
     e.preventDefault();
-
-    const uploadArray = [];
-    if (img) {
-      uploadArray.push({ file: img, label: "img" });
-    }
-    if (imgSmall) {
-      uploadArray.push({ file: imgSmall, label: "imgSmall" });
-    }
-    if (imgTitle) {
-      uploadArray.push({ file: imgTitle, label: "imgTitle" });
-    }
-
-    if (trailer) {
-      uploadArray.push({ file: trailer, label: "trailer" });
-    }
-
-    if (video) {
-      uploadArray.push({ file: video, label: "video" });
-    }
-    upload(uploadArray);
+    setIsDisabled(true);
+    upload(files);
   };
 
   const upload = (items) => {
+    setReady(false);
+    console.log(items);
     items.forEach((item) => {
       const storageRef = ref(storage, `items/${item.file.name}`);
       const uploadTask = uploadBytesResumable(storageRef, item.file);
@@ -126,6 +117,7 @@ export default function Movie() {
             <label>Movie title</label>
             <input
               type="text"
+              name="title"
               placeholder={movie.title}
               onChange={handleChange}
             />
@@ -135,30 +127,35 @@ export default function Movie() {
               rows="4"
               cols="30"
               onChange={handleChange}
+              name="desc"
             ></textarea>
             <label>Year</label>
             <input
               type="number"
               placeholder={movie.year}
               onChange={handleChange}
+              name="year"
             />
             <label>Age limit</label>
             <input
               type="number"
               placeholder={movie.limit}
               onChange={handleChange}
+              name="limit"
             />
             <label>Trailer</label>
             <input
               type="file"
               placeholder={movie.trailer}
-              onChange={(e) => setTrailer(e.target.files[0])}
+              onChange={handleFilesChange}
+              name="trailer"
             />
             <label>Video</label>
             <input
               type="file"
               placeholder={movie.video}
-              onChange={(e) => setVideo(e.target.files[0])}
+              onChange={handleFilesChange}
+              name="video"
             />
           </div>
           <div className="productFormRight">
@@ -171,7 +168,7 @@ export default function Movie() {
                 type="file"
                 id="img"
                 style={{ display: "none" }}
-                onChange={(e) => setImg(e.target.files[0])}
+                onChange={handleFilesChange}
               />
             </div>
             <div className="productUpload">
@@ -183,7 +180,7 @@ export default function Movie() {
                 type="file"
                 id="imgSmall"
                 style={{ display: "none" }}
-                onChange={(e) => setImgSmall(e.target.files[0])}
+                onChange={handleFilesChange}
               />
             </div>
             <div className="productUpload">
@@ -195,7 +192,7 @@ export default function Movie() {
                 type="file"
                 id="imgTitle"
                 style={{ display: "none" }}
-                onChange={(e) => setImgTitle(e.target.files[0])}
+                onChange={handleFilesChange}
               />
             </div>
             {ready ? (
@@ -203,7 +200,11 @@ export default function Movie() {
                 Update
               </button>
             ) : (
-              <button className="productButton" onClick={handleUpload}>
+              <button
+                className="productButton"
+                onClick={handleUpload}
+                disabled={isDisabled}
+              >
                 Upload
               </button>
             )}
