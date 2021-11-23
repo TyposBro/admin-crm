@@ -28,7 +28,7 @@ export default function ListItem() {
       history.push("/lists");
     }
   };
-
+  console.log(list);
   return (
     <div className="product">
       <div className="productTitleContainer">

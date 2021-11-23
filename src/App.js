@@ -10,10 +10,11 @@ import Movie from "./pages/movie/Movie";
 import NewMovie from "./pages/newMovie/NewMovie";
 import LoginPage from "./pages/login/Login.jsx";
 import Lists from "./pages/lists/Lists";
+import ListItem from "./pages/listItem/ListItem";
+import NewList from "./pages/newList/NewList";
 import Sidebar from "./components/sidebar/Sidebar";
 import Topbar from "./components/topbar/Topbar";
 import "./App.css";
-import ListItem from "./pages/listItem/ListItem";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -75,7 +76,7 @@ const DefaultContainer = () => {
             <ListItem />
           </Route>
           <Route path="/newlist">
-            <NewMovie />
+            <NewList />
           </Route>
         </Switch>
       </div>

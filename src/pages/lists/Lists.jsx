@@ -21,10 +21,10 @@ export default function Lists() {
   };
 
   const columns = [
-    { field: "_id", headerName: "ID", width: 90 },
-    { field: "title", headerName: "Title", width: 120 },
-    { field: "genre", headerName: "Genre", width: 120 },
-    { field: "type", headerName: "type", width: 120 },
+    { field: "_id", headerName: "ID", width: 250 },
+    { field: "title", headerName: "Title", width: 250 },
+    { field: "genre", headerName: "Genre", width: 150 },
+    { field: "type", headerName: "type", width: 200 },
     {
       field: "action",
       headerName: "Action",

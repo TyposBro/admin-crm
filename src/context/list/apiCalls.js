@@ -53,8 +53,10 @@ export const createList = async (list, dispatch) => {
       headers: { token },
     });
     dispatch(createListSuccess(data));
+    return true;
   } catch (error) {
     dispatch(createListFailure());
+    return false;
   }
 };
 

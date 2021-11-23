@@ -24,8 +24,8 @@ export default function MovieList() {
   const columns = [
     { field: "_id", headerName: "ID", width: 90 },
     {
-      field: "movies",
-      headerName: "Movies",
+      field: "title",
+      headerName: "Title",
       width: 200,
       renderCell: (params) => {
         return (
