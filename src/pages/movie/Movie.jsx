@@ -1,4 +1,4 @@
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { Link, useLocation, Redirect } from "react-router-dom";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase";
 import { updateMovie } from "../../context/movie/apiCalls";
@@ -10,11 +10,12 @@ import "./movie.css";
 export default function Movie() {
   const { dispatch } = useContext(MoviesContext);
   const location = useLocation();
-  const history = useHistory();
+
   const [movie, setMovie] = useState(location.state.movie);
   const [ready, setReady] = useState(null);
   const [files, setFiles] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -34,11 +35,9 @@ export default function Movie() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const success = await updateMovie(movie, dispatch);
-    console.log(success);
-    if (success) {
-      history.push("/movies");
-    }
+    const result = await updateMovie(movie, dispatch);
+    console.log(result);
+    setRedirect(result);
   };
 
   const handleUpload = (e) => {
@@ -77,7 +76,9 @@ export default function Movie() {
     });
   };
 
-  return (
+  return redirect ? (
+    <Redirect to="/movies" />
+  ) : (
     <div className="product">
       <div className="productTitleContainer">
         <h1 className="productTitle">Movie</h1>

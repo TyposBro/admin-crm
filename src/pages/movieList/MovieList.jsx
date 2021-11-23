@@ -17,7 +17,6 @@ export default function MovieList() {
     getMovies(dispatch);
   }, [dispatch]);
   const handleDelete = (id) => {
-    // setData(data.filter((item) => item.id !== id));
     deleteMovie(id, dispatch);
   };
 

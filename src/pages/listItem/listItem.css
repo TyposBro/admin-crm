@@ -1,6 +1,8 @@
 .product {
   flex: 4;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .productTitleContainer {
@@ -31,7 +33,7 @@
 
 .productTopRight {
   padding: 20px;
-  margin: 20px;
+  margin: 20px 0;
   -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
 }
@@ -71,7 +73,7 @@
 
 .productBottom {
   padding: 20px;
-  margin: 20px;
+  margin: 20px 0;
   -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
 }
@@ -122,11 +124,15 @@
 }
 
 .productButton {
+  margin-top: 30px;
   border: none;
-  padding: 5px;
-  border-radius: 5px;
+  padding: 15px 50px;
+  max-width: 200px;
+  border-radius: 15px;
   background-color: darkblue;
   color: white;
   font-weight: 600;
   cursor: pointer;
+  text-align: center;
+  align-self: flex-end;
 }

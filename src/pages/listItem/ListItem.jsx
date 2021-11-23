@@ -1,35 +1,64 @@
-import { Link, useLocation, useHistory } from "react-router-dom";
-
+import { useContext, useState, useEffect } from "react";
+import { Link, useLocation, Redirect } from "react-router-dom";
+import { DataGrid } from "@material-ui/data-grid";
 import { updateList } from "../../context/list/apiCalls";
 import { ListsContext } from "../../context/list/ListContext";
-import { useContext, useState } from "react";
+import { MoviesContext } from "../../context/movie/MovieContext";
+import { getMovies } from "../../context/movie/apiCalls";
+
 import "./listItem.css";
 
 export default function ListItem() {
   const { dispatch } = useContext(ListsContext);
   const location = useLocation();
-  const history = useHistory();
   const [list, setList] = useState(location.state.list);
+  const { movies, dispatch: dispatchMovies } = useContext(MoviesContext);
+  const [pageSize, setPageSize] = useState(5);
+  const [content, setContent] = useState(list.content);
+  const [redirect, setRedirect] = useState(false);
+  const columns = [
+    { field: "_id", headerName: "ID", width: 90 },
+    {
+      field: "title",
+      headerName: "Title",
+      width: 250,
+      renderCell: ({ row }) => {
+        return <div className="productListItem">{row.title}</div>;
+      },
+    },
+    { field: "genre", headerName: "Genre", width: 150 },
+    { field: "year", headerName: "Year", width: 150 },
+    { field: "limit", headerName: "Age Limit", width: 150 },
+    {
+      field: "isSeries",
+      headerName: "Type",
+      width: 150,
+      renderCell: ({ row }) => {
+        return <>{row.isSeries ? "Series" : "Movie"}</>;
+      },
+    },
+  ];
+  useEffect(() => {
+    getMovies(dispatchMovies).then((elem) =>
+      setContent(location.state.list.content)
+    );
+  }, [dispatchMovies, location]);
 
   const handleChange = (e) => {
     const value = e.target.value;
-    console.log("[", [e.target.name], "]", ":", value);
-
     setList({ ...list, [e.target.name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(list);
 
-    const success = await updateList(list, dispatch);
-    console.log(success);
-    if (success) {
-      history.push("/lists");
-    }
+    const result = await updateList({ ...list, content }, dispatch);
+    setRedirect(result);
   };
-  console.log(list);
-  return (
+
+  return redirect ? (
+    <Redirect to="/lists" />
+  ) : (
     <div className="product">
       <div className="productTitleContainer">
         <h1 className="productTitle">List</h1>
@@ -87,13 +116,29 @@ export default function ListItem() {
               onChange={handleChange}
             />
           </div>
-          <div className="productFormRight">
-            <button className="productButton" onClick={handleSubmit}>
-              Update
-            </button>
-          </div>
+          <div className="productFormRight"></div>
         </form>
       </div>
+      <div style={{ maxWidth: "100%" }}>
+        <DataGrid
+          rows={movies}
+          disableSelectionOnClick
+          columns={columns}
+          pageSize={pageSize}
+          rowsPerPageOptions={[5, 8, 10, 50]}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          checkboxSelection
+          getRowId={(r) => r._id}
+          autoHeight
+          onSelectionModelChange={(id) => {
+            setContent(id);
+          }} //added line
+          selectionModel={content} //added line
+        />
+      </div>
+      <button className="productButton" onClick={handleSubmit}>
+        Update
+      </button>
     </div>
   );
 }

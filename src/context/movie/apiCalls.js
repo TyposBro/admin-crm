@@ -25,8 +25,10 @@ export const getMovies = async (dispatch) => {
       headers: { token },
     });
     dispatch(getMoviesSuccess(data));
+    return true;
   } catch (error) {
     dispatch(getMoviesFailure());
+    return false;
   }
 };
 

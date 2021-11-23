@@ -11,7 +11,7 @@ export default function NewList() {
   const { dispatch } = useContext(ListsContext);
   const { movies, dispatch: dispatchMovies } = useContext(MoviesContext);
   const history = useHistory();
-  const [list, setList] = useState({});
+  const [list, setList] = useState({ type: "Movies" });
   const [pageSize, setPageSize] = useState(5);
   const [content, setContent] = useState([]);
   useEffect(() => {
@@ -79,7 +79,7 @@ export default function NewList() {
         <div className="addProductItem">
           <label>Type</label>
           <select id="type" name="type" onChange={handleChange}>
-            <option value="Movie">Movie</option>
+            <option value="Movies">Movies</option>
             <option value="Series">Series</option>
           </select>
         </div>
