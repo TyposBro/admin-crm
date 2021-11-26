@@ -3,15 +3,13 @@ import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 
 import { Link } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { MoviesContext } from "../../context/movie/MovieContext";
 import { deleteMovie, getMovies } from "../../context/movie/apiCalls.js";
-import { useState } from "react";
 
 export default function MovieList() {
-  // const [data, setData] = useState(productRows);
-  const { movies, dispatch } = useContext(MoviesContext);
   const [pageSize, setPageSize] = useState(8);
+  const { movies, dispatch } = useContext(MoviesContext);
 
   useEffect(() => {
     getMovies(dispatch);
