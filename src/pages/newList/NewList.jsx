@@ -5,6 +5,8 @@ import { ListsContext } from "../../context/list/ListContext";
 import { MoviesContext } from "../../context/movie/MovieContext";
 import { getMovies } from "../../context/movie/apiCalls";
 import { DataGrid } from "@material-ui/data-grid";
+import Loader from "react-loader-spinner";
+
 import "./newList.css";
 
 export default function NewList() {
@@ -14,8 +16,13 @@ export default function NewList() {
   const [list, setList] = useState({ type: "Movies" });
   const [pageSize, setPageSize] = useState(5);
   const [content, setContent] = useState([]);
+  const [spinner, setSpinner] = useState(true);
+
   useEffect(() => {
     getMovies(dispatchMovies);
+    setTimeout(() => {
+      setSpinner(false);
+    }, 3000);
   }, [dispatchMovies]);
 
   const handleChange = (e) => {
@@ -85,21 +92,31 @@ export default function NewList() {
         </div>
       </form>
       <div style={{ maxWidth: "100%" }}>
-        <DataGrid
-          rows={movies}
-          disableSelectionOnClick
-          columns={columns}
-          pageSize={pageSize}
-          rowsPerPageOptions={[5, 8, 10, 50]}
-          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-          checkboxSelection
-          getRowId={(r) => Math.random()}
-          autoHeight
-          onSelectionModelChange={(id) => {
-            setContent(id);
-          }} //added line
-          selectionModel={content} //added line
-        />
+        {spinner ? (
+          <Loader
+            type="Puff"
+            color="#00BFFF"
+            height={100}
+            width={100}
+            // timeout={3000} //3 secs
+          />
+        ) : (
+          <DataGrid
+            rows={movies}
+            disableSelectionOnClick
+            columns={columns}
+            pageSize={pageSize}
+            rowsPerPageOptions={[5, 8, 10, 50]}
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+            checkboxSelection
+            getRowId={(r) => r._id}
+            autoHeight
+            onSelectionModelChange={(id) => {
+              setContent(id);
+            }} //added line
+            selectionModel={content} //added line
+          />
+        )}
       </div>
       <button className="addProductButton" onClick={handleSubmit}>
         Create

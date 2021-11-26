@@ -1,7 +1,7 @@
 import "./lists.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-
+import Loader from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { ListsContext } from "../../context/list/ListContext";
@@ -11,9 +11,14 @@ import { useState } from "react";
 export default function Lists() {
   const { lists, dispatch } = useContext(ListsContext);
   const [pageSize, setPageSize] = useState(8);
+  const [spinner, setSpinner] = useState(true);
 
   useEffect(() => {
     getLists(dispatch);
+
+    setTimeout(() => {
+      setSpinner(false);
+    }, 3000);
   }, [dispatch]);
 
   const handleDelete = (id) => {
@@ -52,16 +57,26 @@ export default function Lists() {
 
   return (
     <div className="productList">
-      <DataGrid
-        rows={lists}
-        disableSelectionOnClick
-        columns={columns}
-        pageSize={pageSize}
-        rowsPerPageOptions={[5, 8, 10, 50]}
-        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-        checkboxSelection
-        getRowId={(r) => Math.random()}
-      />
+      {spinner ? (
+        <Loader
+          type="Puff"
+          color="#00BFFF"
+          height={100}
+          width={100}
+          // timeout={3000} //3 secs
+        />
+      ) : (
+        <DataGrid
+          rows={lists}
+          disableSelectionOnClick
+          columns={columns}
+          pageSize={pageSize}
+          rowsPerPageOptions={[5, 8, 10, 50]}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          checkboxSelection
+          getRowId={(r) => r._id}
+        />
+      )}
     </div>
   );
 }

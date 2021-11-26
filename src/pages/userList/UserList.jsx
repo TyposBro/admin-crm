@@ -1,24 +1,25 @@
 import "./userList.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { userRows } from "../../dummyData";
 import { Link } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UsersContext } from "../../context/user/UserContext";
 import { getUsers, deleteUser } from "../../context/user/apiCalls";
+import Loader from "react-loader-spinner";
 
 export default function UserList() {
-  const [data, setData] = useState(userRows);
   const { users, dispatch } = useContext(UsersContext);
-  
+  const [spinner, setSpinner] = useState(true);
 
   useEffect(() => {
     getUsers(dispatch);
+
+    setTimeout(() => {
+      setSpinner(false);
+    }, 3000);
   }, [dispatch]);
 
   const handleDelete = (id) => {
-    // setData(data.filter((item) => item.id !== id));
-    console.log(id);
     deleteUser(id, dispatch);
   };
 
@@ -73,19 +74,24 @@ export default function UserList() {
 
   return (
     <div className="userList">
-      <DataGrid
-        rows={users}
-        disableSelectionOnClick
-        columns={columns}
-        pageSize={8}
-        checkboxSelection
-        getRowId={(r) => {
-          if (r) {
-            return r._id;
-          }
-          return Math.random();
-        }}
-      />
+      {spinner ? (
+        <Loader
+          type="Puff"
+          color="#00BFFF"
+          height={100}
+          width={100}
+          // timeout={3000} //3 secs
+        />
+      ) : (
+        <DataGrid
+          rows={users}
+          disableSelectionOnClick
+          columns={columns}
+          pageSize={8}
+          checkboxSelection
+          getRowId={(r) => r._id}
+        />
+      )}
     </div>
   );
 }

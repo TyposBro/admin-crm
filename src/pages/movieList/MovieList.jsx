@@ -1,6 +1,7 @@
 import "./movieList.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
+import Loader from "react-loader-spinner";
 
 import { Link } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
@@ -10,9 +11,13 @@ import { deleteMovie, getMovies } from "../../context/movie/apiCalls.js";
 export default function MovieList() {
   const [pageSize, setPageSize] = useState(8);
   const { movies, dispatch } = useContext(MoviesContext);
+  const [spinner, setSpinner] = useState(true);
 
   useEffect(() => {
     getMovies(dispatch);
+    setTimeout(() => {
+      setSpinner(false);
+    }, 3000);
   }, [dispatch]);
   const handleDelete = (id) => {
     deleteMovie(id, dispatch);
@@ -64,16 +69,26 @@ export default function MovieList() {
 
   return (
     <div className="productList">
-      <DataGrid
-        rows={movies}
-        disableSelectionOnClick
-        columns={columns}
-        pageSize={pageSize}
-        rowsPerPageOptions={[5, 8, 10, 50]}
-        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-        checkboxSelection
-        getRowId={(r) => Math.random()}
-      />
+      {spinner ? (
+        <Loader
+          type="Puff"
+          color="#00BFFF"
+          height={100}
+          width={100}
+          // timeout={3000} //3 secs
+        />
+      ) : (
+        <DataGrid
+          rows={movies}
+          disableSelectionOnClick
+          columns={columns}
+          pageSize={pageSize}
+          rowsPerPageOptions={[5, 8, 10, 50]}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          checkboxSelection
+          getRowId={(r) => r._id}
+        />
+      )}
     </div>
   );
 }

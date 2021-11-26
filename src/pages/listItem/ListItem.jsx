@@ -5,6 +5,7 @@ import { updateList } from "../../context/list/apiCalls";
 import { ListsContext } from "../../context/list/ListContext";
 import { MoviesContext } from "../../context/movie/MovieContext";
 import { getMovies } from "../../context/movie/apiCalls";
+import Loader from "react-loader-spinner";
 
 import "./listItem.css";
 
@@ -16,6 +17,8 @@ export default function ListItem() {
   const [pageSize, setPageSize] = useState(5);
   const [content, setContent] = useState(list.content);
   const [redirect, setRedirect] = useState(false);
+  const [spinner, setSpinner] = useState(true);
+
   const columns = [
     { field: "_id", headerName: "ID", width: 90 },
     {
@@ -42,6 +45,9 @@ export default function ListItem() {
     getMovies(dispatchMovies).then((elem) =>
       setContent(location.state.list.content)
     );
+    setTimeout(() => {
+      setSpinner(false);
+    }, 3000);
   }, [dispatchMovies, location]);
 
   const handleChange = (e) => {
@@ -120,21 +126,31 @@ export default function ListItem() {
         </form>
       </div>
       <div style={{ maxWidth: "100%" }}>
-        <DataGrid
-          rows={movies}
-          disableSelectionOnClick
-          columns={columns}
-          pageSize={pageSize}
-          rowsPerPageOptions={[5, 8, 10, 50]}
-          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-          checkboxSelection
-          getRowId={(r) => Math.random()}
-          autoHeight
-          onSelectionModelChange={(id) => {
-            setContent(id);
-          }} //added line
-          selectionModel={content} //added line
-        />
+        {spinner ? (
+          <Loader
+            type="Puff"
+            color="#00BFFF"
+            height={100}
+            width={100}
+            // timeout={3000} //3 secs
+          />
+        ) : (
+          <DataGrid
+            rows={movies}
+            disableSelectionOnClick
+            columns={columns}
+            pageSize={pageSize}
+            rowsPerPageOptions={[5, 8, 10, 50]}
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+            checkboxSelection
+            getRowId={(r) => r._id}
+            autoHeight
+            onSelectionModelChange={(id) => {
+              setContent(id);
+            }} //added line
+            selectionModel={content} //added line
+          />
+        )}
       </div>
       <button className="productButton" onClick={handleSubmit}>
         Update
