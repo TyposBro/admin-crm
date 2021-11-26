@@ -1,9 +1,9 @@
 import reducers from "./AuthReducers";
-
+import getLocalUser from "../../utils/check_jwt";
 import { createContext, useReducer, useEffect } from "react";
 
 const INITIAL_STATE = {
-  user: JSON.parse(localStorage.getItem("user")) || null,
+  user: getLocalUser(),
   isFetching: false,
   error: false,
 };
