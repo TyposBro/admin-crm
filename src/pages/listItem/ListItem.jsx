@@ -128,7 +128,7 @@ export default function ListItem() {
           rowsPerPageOptions={[5, 8, 10, 50]}
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
           checkboxSelection
-          getRowId={(r) => r._id}
+          getRowId={(r) => Math.random()}
           autoHeight
           onSelectionModelChange={(id) => {
             setContent(id);

@@ -15,8 +15,8 @@ export default function Lists() {
   useEffect(() => {
     getLists(dispatch);
   }, [dispatch]);
+
   const handleDelete = (id) => {
-    // setData(data.filter((item) => item.id !== id));
     deleteList(id, dispatch);
   };
 
@@ -60,7 +60,7 @@ export default function Lists() {
         rowsPerPageOptions={[5, 8, 10, 50]}
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         checkboxSelection
-        getRowId={(r) => r._id}
+        getRowId={(r) => Math.random()}
       />
     </div>
   );
