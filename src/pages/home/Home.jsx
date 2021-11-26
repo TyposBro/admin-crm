@@ -4,9 +4,11 @@ import FeaturedInfo from "../../components/featuredInfo/FeaturedInfo";
 import "./home.css";
 import WidgetSm from "../../components/widgetSm/WidgetSm";
 import WidgetLg from "../../components/widgetLg/WidgetLg";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useContext } from "react";
+import { AuthContext } from "../../context/auth/AuthContext";
 
 export default function Home() {
+  const { user } = useContext(AuthContext);
   const MONTHS = useMemo(
     () => [
       "Jan",
@@ -31,8 +33,7 @@ export default function Home() {
       try {
         const { data } = await Axios.get("/users/stats", {
           headers: {
-            token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODViZmQ5Njg3NTA3OWUxYTg4YjBiNyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYzNjgwNjg1NSwiZXhwIjoxNjM2ODkzMjU1fQ.kWeY9IyQW_WrbkmzkBG11BWX25UG0qId-lhkA-l2EX0",
+            token: user.token,
           },
         });
 

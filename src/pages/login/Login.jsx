@@ -1,18 +1,25 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
-import "./login.css";
 import { useContext, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/auth/AuthContext";
 import { login } from "../../context/auth/apiCalls";
+import "./login.css";
 
 const LoginPage = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const { isFetching, dispatch } = useContext(AuthContext);
-
-  const handleLogin = (e) => {
+  const history = useHistory();
+  const location = useLocation();
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    login({ username, password }, dispatch);
+    const res = await login({ username, password }, dispatch);
+    if (res) {
+      history.push(`${location.pathname}`);
+    } else {
+      history.push("/login");
+    }
   };
   return (
     <div className="login">
