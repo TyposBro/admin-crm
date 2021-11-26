@@ -3,7 +3,6 @@ export const loginStart = () => ({
 });
 
 export const loginSuccess = (user) => {
-  console.log("LOGIN Success");
   return {
     type: "LOGIN_SUCCESS",
     payload: user,

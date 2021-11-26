@@ -32,9 +32,6 @@ const listsReducer = (state, action) => {
     case "UPDATE_LIST_SUCCESS":
       return {
         lists: state.lists.map((list) => {
-          console.log("listId:", list._id);
-          console.log("PayloadID:", action.payload._id);
-
           return list._id === action.payload._id && action.payload;
         }),
         isFetching: false,
