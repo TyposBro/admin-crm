@@ -1,18 +1,18 @@
 import "./widgetSm.css";
 import { Visibility } from "@material-ui/icons";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../../context/auth/AuthContext";
 import axios from "../../utils/axios";
 
 export default function WidgetSm() {
   const [newUsers, setNewUsers] = useState();
-
+  const { user } = useContext(AuthContext);
   useEffect(() => {
     const getNewUsers = async () => {
       try {
         const { data } = await axios.get("/users?new=true", {
           headers: {
-            token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODViZmQ5Njg3NTA3OWUxYTg4YjBiNyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYzNjgwNjg1NSwiZXhwIjoxNjM2ODkzMjU1fQ.kWeY9IyQW_WrbkmzkBG11BWX25UG0qId-lhkA-l2EX0",
+            token: user.token,
           },
         });
         setNewUsers(data);
