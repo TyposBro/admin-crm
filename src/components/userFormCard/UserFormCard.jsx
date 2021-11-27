@@ -1,8 +1,11 @@
-import { Publish } from "@material-ui/icons";
+import { useState } from "react";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { UsersContext } from "../../context/user/UserContext";
+import Loader from "react-loader-spinner";
 import upload from "../../utils/firestoreUpload";
+import { UsersContext } from "../../context/user/UserContext";
+import { updateUser } from "../../context/user/apiCalls";
+import { Publish } from "@material-ui/icons";
 
 import "./UserFormCard.css";
 
@@ -10,13 +13,27 @@ const UserFormCard = ({ userState }) => {
   const { dispatch } = useContext(UsersContext);
   const history = useHistory();
   const { user, setUser } = userState;
+  const [ready, setReady] = useState(true);
 
   const handleChange = ({ target }) => {
     setUser({ ...user, [target.name]: target.value });
   };
 
-  const handleUpload = () => {
-    //   upload()
+  const handleUpload = (e) => {
+    const file = e.target.files[0];
+    const label = e.target.name;
+    upload([{ file, label }], setUser, setReady);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const res = await updateUser(user, dispatch);
+    if (res) {
+      history.push("/users");
+    } else {
+      history.push("/");
+    }
   };
 
   return (
@@ -73,19 +90,26 @@ const UserFormCard = ({ userState }) => {
           </div>
         </div>
         <div className="userUpdateRight">
-          <div className="userUpdateUpload">
-            <img className="userUpdateImg" src={user.avatar} alt="" />
-            <label htmlFor="avatar">
-              <Publish className="userUpdateIcon" />
-            </label>
-            <input
-              type="file"
-              name="avatar"
-              id="avatar"
-              style={{ display: "none" }}
-            />
-          </div>
-          <button className="userUpdateButton">Update</button>
+          {ready ? (
+            <div className="userUpdateUpload">
+              <img className="userUpdateImg" src={user.avatar} alt="" />
+              <label htmlFor="avatar">
+                <Publish className="userUpdateIcon" />
+              </label>
+              <input
+                onChange={handleUpload}
+                type="file"
+                name="avatar"
+                id="avatar"
+                style={{ display: "none" }}
+              />
+            </div>
+          ) : (
+            <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+          )}
+          <button onClick={handleSubmit} className="userUpdateButton">
+            Update
+          </button>
         </div>
       </form>
     </div>

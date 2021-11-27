@@ -1,4 +1,4 @@
-import { Link, useLocation, Redirect } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { updateMovie } from "../../context/movie/apiCalls";
 import { MoviesContext } from "../../context/movie/MovieContext";
 import { Publish } from "@material-ui/icons";
@@ -9,12 +9,12 @@ import "./movie.css";
 export default function Movie() {
   const { dispatch } = useContext(MoviesContext);
   const location = useLocation();
+  const history = useHistory();
 
   const [movie, setMovie] = useState(location.state.movie);
   const [ready, setReady] = useState(null);
   const [files, setFiles] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [redirect, setRedirect] = useState(false);
 
   const handleChange = ({ target }) => {
     const value = target.value;
@@ -35,7 +35,11 @@ export default function Movie() {
     e.preventDefault();
 
     const result = await updateMovie(movie, dispatch);
-    setRedirect(result);
+    if (result) {
+      history.push("/movies");
+    } else {
+      history.push("/");
+    }
   };
 
   const handleUpload = (e) => {
@@ -44,39 +48,7 @@ export default function Movie() {
     upload(files, setMovie, setReady);
   };
 
-  // const upload = (items) => {
-  //   setReady(false);
-  //   console.log(items);
-  //   items.forEach((item) => {
-  //     const storageRef = ref(storage, `items/${item.file.name}`);
-  //     const uploadTask = uploadBytesResumable(storageRef, item.file);
-
-  //     uploadTask.on(
-  //       "state_changed",
-  //       (snapshot) => {
-  //         const progress = Math.floor(
-  //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-  //         );
-  //         console.log("Upload is " + progress + "% done");
-  //         setReady(progress === 100);
-  //       },
-  //       (error) => {
-  //         console.log(error);
-  //       },
-  //       () => {
-  //         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-  //           setMovie((prev) => {
-  //             return { ...prev, [item.label]: url };
-  //           });
-  //         });
-  //       }
-  //     );
-  //   });
-  // };
-
-  return redirect ? (
-    <Redirect to="/movies" />
-  ) : (
+  return (
     <div className="product">
       <div className="productTitleContainer">
         <h1 className="productTitle">Movie</h1>

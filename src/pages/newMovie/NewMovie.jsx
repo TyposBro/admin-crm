@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import upload from "../../utils/firestoreUpload";
-import "./newMovie.css";
 import { createMovie } from "../../context/movie/apiCalls";
 import { MoviesContext } from "../../context/movie/MovieContext";
+import "./newMovie.css";
 
 export default function NewMovie() {
   const { dispatch } = useContext(MoviesContext);
