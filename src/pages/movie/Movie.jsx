@@ -1,10 +1,9 @@
 import { Link, useLocation, Redirect } from "react-router-dom";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage } from "../../firebase";
 import { updateMovie } from "../../context/movie/apiCalls";
 import { MoviesContext } from "../../context/movie/MovieContext";
 import { Publish } from "@material-ui/icons";
 import { useContext, useState } from "react";
+import upload from "../../utils/firestoreUpload";
 import "./movie.css";
 
 export default function Movie() {
@@ -17,9 +16,9 @@ export default function Movie() {
   const [isDisabled, setIsDisabled] = useState(false);
   const [redirect, setRedirect] = useState(false);
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setMovie({ ...movie, [e.target.name]: value });
+  const handleChange = ({ target }) => {
+    const value = target.value;
+    setMovie({ ...movie, [target.name]: value });
     if (files.length === 0) {
       setReady(true);
     }
@@ -36,45 +35,44 @@ export default function Movie() {
     e.preventDefault();
 
     const result = await updateMovie(movie, dispatch);
-    console.log(result);
     setRedirect(result);
   };
 
   const handleUpload = (e) => {
     e.preventDefault();
     setIsDisabled(true);
-    upload(files);
+    upload(files, setMovie, setReady);
   };
 
-  const upload = (items) => {
-    setReady(false);
-    console.log(items);
-    items.forEach((item) => {
-      const storageRef = ref(storage, `items/${item.file.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, item.file);
+  // const upload = (items) => {
+  //   setReady(false);
+  //   console.log(items);
+  //   items.forEach((item) => {
+  //     const storageRef = ref(storage, `items/${item.file.name}`);
+  //     const uploadTask = uploadBytesResumable(storageRef, item.file);
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress = Math.floor(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          console.log("Upload is " + progress + "% done");
-          setReady(progress === 100);
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            setMovie((prev) => {
-              return { ...prev, [item.label]: url };
-            });
-          });
-        }
-      );
-    });
-  };
+  //     uploadTask.on(
+  //       "state_changed",
+  //       (snapshot) => {
+  //         const progress = Math.floor(
+  //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //         );
+  //         console.log("Upload is " + progress + "% done");
+  //         setReady(progress === 100);
+  //       },
+  //       (error) => {
+  //         console.log(error);
+  //       },
+  //       () => {
+  //         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+  //           setMovie((prev) => {
+  //             return { ...prev, [item.label]: url };
+  //           });
+  //         });
+  //       }
+  //     );
+  //   });
+  // };
 
   return redirect ? (
     <Redirect to="/movies" />
