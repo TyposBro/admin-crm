@@ -44,3 +44,9 @@
   height: 40px;
   align-self: flex-end;
 }
+
+.tableContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

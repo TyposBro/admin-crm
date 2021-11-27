@@ -71,6 +71,7 @@ export default function MovieList() {
     <div className="productList">
       {spinner ? (
         <Loader
+          className="spinner"
           type="Puff"
           color="#00BFFF"
           height={100}

@@ -91,7 +91,7 @@ export default function NewList() {
           </select>
         </div>
       </form>
-      <div style={{ maxWidth: "100%" }}>
+      <div className="tableContainer">
         {spinner ? (
           <Loader
             type="Puff"

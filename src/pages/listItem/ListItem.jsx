@@ -122,10 +122,9 @@ export default function ListItem() {
               onChange={handleChange}
             />
           </div>
-          <div className="productFormRight"></div>
         </form>
       </div>
-      <div style={{ maxWidth: "100%" }}>
+      <div className="tableContainer" style={{ maxWidth: "100%" }}>
         {spinner ? (
           <Loader
             type="Puff"
