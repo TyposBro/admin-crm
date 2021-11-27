@@ -18,13 +18,13 @@ import "./App.css";
 
 function App() {
   const { user } = useContext(AuthContext);
+
   return (
     <Router>
       <Switch>
-        <Route exact path="/login">
-          <LoginPage />
+        <Route>
+          {user ? <DefaultContainer user={user} /> : <LoginContainer />}
         </Route>
-        <Route component={user ? DefaultContainer : LoginContainer} />
       </Switch>
     </Router>
   );
@@ -40,10 +40,10 @@ const LoginContainer = () => {
   );
 };
 
-const DefaultContainer = () => {
+const DefaultContainer = ({ user }) => {
   return (
     <Router>
-      <Topbar />
+      <Topbar user={user.info} />
       <div className="container">
         <Sidebar />
         <Switch>

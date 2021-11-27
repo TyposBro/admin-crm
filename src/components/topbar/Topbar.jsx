@@ -1,9 +1,9 @@
-import React from "react";
-import "./topbar.css";
 import { NotificationsNone, Language, Settings } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+// import Dropdown from "../popover/Popover";
+import "./topbar.css";
 
-export default function Topbar() {
+export default function Topbar({ user }) {
   return (
     <div className="topbar">
       <div className="topbarWrapper">
@@ -22,11 +22,13 @@ export default function Topbar() {
           <div className="topbarIconContainer">
             <Settings />
           </div>
-          <img
-            src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-            alt=""
-            className="topAvatar"
-          />
+          {/* <Dropdown> */}
+          <img src={user.avatar} alt="" className="topAvatar" />
+          {/* </Dropdown> */}
+          {/* <div className="dropdown">
+            <img src={user.avatar} alt="" className="topAvatar" />
+            <div className="dropdown-content"></div> */}
+          {/* </div> */}
         </div>
       </div>
     </div>

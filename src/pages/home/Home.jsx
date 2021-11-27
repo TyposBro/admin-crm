@@ -50,7 +50,7 @@ export default function Home() {
       }
     };
     getStats();
-  }, [MONTHS]);
+  }, [MONTHS, user]);
 
   return (
     <div className="home">

@@ -1,6 +1,6 @@
 import reducers from "./AuthReducers";
-import getLocalUser from "../../utils/check_jwt";
 import { createContext, useReducer, useEffect } from "react";
+import getLocalUser from "../../utils/check_jwt";
 
 const INITIAL_STATE = {
   user: getLocalUser(),
@@ -14,8 +14,9 @@ const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducers, INITIAL_STATE);
 
   useEffect(() => {
+    console.log("stringify:", state.user);
     localStorage.setItem("user", JSON.stringify(state.user));
-  }, [state.user]);
+  }, [state]);
   return (
     <AuthContext.Provider
       value={{

@@ -15,12 +15,13 @@ import {
   updateListSuccess,
   updateListFailure,
 } from "./ListActions";
+import getLocalUser from "../../utils/check_jwt";
 
 export const getLists = async (dispatch) => {
   dispatch(getListsStart());
-  const token = JSON.parse(localStorage.getItem("user")).token;
 
   try {
+    const { token } = getLocalUser();
     const { data } = await axios.get("/lists", {
       headers: { token },
     });
@@ -32,7 +33,7 @@ export const getLists = async (dispatch) => {
 
 export const deleteList = async (id, dispatch) => {
   dispatch(deleteListStart());
-  const token = JSON.parse(localStorage.getItem("user")).token;
+  const { token } = JSON.parse(localStorage.getItem("user"));
 
   try {
     await axios.delete(`/lists/${id}`, {
@@ -46,9 +47,10 @@ export const deleteList = async (id, dispatch) => {
 
 export const createList = async (list, dispatch) => {
   dispatch(createListStart());
-  const token = JSON.parse(localStorage.getItem("user")).token;
 
   try {
+    const { token } = getLocalUser();
+
     const { data } = await axios.post(`/lists`, list, {
       headers: { token },
     });
@@ -62,9 +64,10 @@ export const createList = async (list, dispatch) => {
 
 export const updateList = async (list, dispatch) => {
   dispatch(updateListStart());
-  const token = JSON.parse(localStorage.getItem("user")).token;
 
   try {
+    const { token } = getLocalUser();
+
     const { data } = await axios.put(`/lists/${list._id}`, list, {
       headers: { token },
     });

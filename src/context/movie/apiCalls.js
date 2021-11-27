@@ -16,11 +16,14 @@ import {
   updateMovieFailure,
 } from "./MovieActions";
 
+import getLocalUser from "../../utils/check_jwt";
+
 export const getMovies = async (dispatch) => {
   dispatch(getMoviesStart());
-  const token = JSON.parse(localStorage.getItem("user")).token;
 
   try {
+    const { token } = getLocalUser();
+
     const { data } = await axios.get("/movies", {
       headers: { token },
     });
@@ -34,9 +37,10 @@ export const getMovies = async (dispatch) => {
 
 export const deleteMovie = async (id, dispatch) => {
   dispatch(deleteMovieStart());
-  const token = JSON.parse(localStorage.getItem("user")).token;
 
   try {
+    const { token } = getLocalUser();
+
     await axios.delete(`/movies/${id}`, {
       headers: { token },
     });
@@ -48,9 +52,10 @@ export const deleteMovie = async (id, dispatch) => {
 
 export const createMovie = async (movie, dispatch) => {
   dispatch(createMovieStart());
-  const token = JSON.parse(localStorage.getItem("user")).token;
 
   try {
+    const { token } = getLocalUser();
+
     const { data } = await axios.post(`/movies`, movie, {
       headers: { token },
     });
@@ -62,9 +67,10 @@ export const createMovie = async (movie, dispatch) => {
 
 export const updateMovie = async (movie, dispatch) => {
   dispatch(updateMovieStart());
-  const token = JSON.parse(localStorage.getItem("user")).token;
 
   try {
+    const { token } = getLocalUser();
+
     const { data } = await axios.put(`/movies/${movie._id}`, movie, {
       headers: { token },
     });
