@@ -8,9 +8,11 @@ export default function WidgetSm() {
   const [newUsers, setNewUsers] = useState();
   const { user } = useContext(AuthContext);
   useEffect(() => {
+    const controller = new AbortController();
     const getNewUsers = async () => {
       try {
         const { data } = await axios.get("/users?new=true", {
+          signal: controller.signal,
           headers: {
             token: user.token,
           },
@@ -22,7 +24,10 @@ export default function WidgetSm() {
     };
 
     getNewUsers();
-  }, []);
+    return () => {
+      controller.abort();
+    };
+  }, [user]);
 
   return (
     <div className="widgetSm">

@@ -29,9 +29,11 @@ export default function Home() {
 
   const [stats, setStats] = useState([]);
   useEffect(() => {
+    const ctr = new AbortController();
     const getStats = async () => {
       try {
         const { data } = await Axios.get("/users/stats", {
+          signal: ctr.signal,
           headers: {
             token: user.token,
           },
@@ -50,6 +52,10 @@ export default function Home() {
       }
     };
     getStats();
+
+    return () => {
+      ctr.abort();
+    };
   }, [MONTHS, user]);
 
   return (

@@ -1,18 +1,26 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
+// FIXME: LOGIN PAGE
+// TODO: getLocalUser => localStorage
+// TODO: user & newUser
+// TODO: LougOut
+// TODO: REGISTER PAGE
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/auth/AuthContext";
 import { login } from "../../context/auth/apiCalls";
 import "./login.css";
+import { useHistory } from "react-router";
 
 const LoginPage = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const { isFetching, dispatch } = useContext(AuthContext);
+  const history = useHistory();
 
   const handleLogin = (e) => {
     e.preventDefault();
 
     login({ username, password }, dispatch);
+    history.push("/");
   };
   return (
     <div className="login">
