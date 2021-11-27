@@ -32,12 +32,13 @@ export const getUsers = async (dispatch) => {
 
 export const deleteUser = async (id, dispatch) => {
   dispatch(deleteUserStart());
-  const token = JSON.parse(localStorage.getItem("user")).token;
+  const { token } = JSON.parse(localStorage.getItem("user"));
 
   try {
     await axios.delete(`/users/${id}`, {
       headers: { token },
     });
+
     dispatch(deleteUserSuccess(id));
   } catch (error) {
     dispatch(deleteUserFailure());

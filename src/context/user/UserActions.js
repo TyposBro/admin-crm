@@ -12,40 +12,40 @@ export const getUsersFailure = () => ({
 });
 
 export const deleteUserStart = () => ({
-  type: "DELETE_USERS_START",
+  type: "DELETE_USER_START",
 });
 
 export const deleteUserSuccess = (id) => ({
-  type: "DELETE_USERS_SUCCESS",
+  type: "DELETE_USER_SUCCESS",
   payload: id,
 });
 
 export const deleteUserFailure = () => ({
-  type: "DELETE_USERS_FAILURE",
+  type: "DELETE_USER_FAILURE",
 });
 
 export const createUserStart = () => ({
-  type: "CREATE_USERS_START",
+  type: "CREATE_USER_START",
 });
 
 export const createUserSuccess = (user) => ({
-  type: "CREATE_USERS_SUCCESS",
+  type: "CREATE_USER_SUCCESS",
   payload: user,
 });
 
 export const createUserFailure = () => ({
-  type: "CREATE_USERS_FAILURE",
+  type: "CREATE_USER_FAILURE",
 });
 
 export const updateUserStart = () => ({
-  type: "UPDATE_USERS_START",
+  type: "UPDATE_USER_START",
 });
 
 export const updateUserSuccess = (user) => ({
-  type: "UPDATE_USERS_SUCCESS",
+  type: "UPDATE_USER_SUCCESS",
   payload: user,
 });
 
 export const updateUserFailure = () => ({
-  type: "UPDATE_USERS_FAILURE",
+  type: "UPDATE_USER_FAILURE",
 });
