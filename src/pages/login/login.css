@@ -3,12 +3,20 @@
 .login {
   position: absolute;
   width: 100vw;
-  background: rgb(34, 193, 195);
-  background: linear-gradient(
-    135deg,
-    rgba(34, 193, 195, 1) 0%,
-    rgba(253, 187, 45, 1) 100%
+  background: rgb(211, 211, 211);
+  background: radial-gradient(
+    circle,
+    rgba(211, 211, 211, 1) 0%,
+    rgba(158, 158, 158, 1) 61%,
+    rgba(0, 0, 0, 1) 100%
   );
+  /* background: rgb(255, 255, 255);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(158, 158, 158, 1) 61%,
+    rgba(0, 0, 0, 1) 100%
+  ); */
   font-family: "work sans";
 }
 
@@ -19,10 +27,10 @@ html {
 #loginform {
   max-width: 500px;
   min-width: 300px;
-  max-height: 700px;
+  max-height: 800px;
   width: 30%;
-  height: 60%;
-  margin: 100px auto;
+  height: 80%;
+  margin: 90px auto;
   background-color: #ffffff;
   border-radius: 25px;
 }
@@ -43,19 +51,28 @@ html {
   max-width: 100%;
 }
 
+.row > a,
+.row > i {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  color: gray;
+  text-decoration: none;
+}
 .row input {
   width: 80%;
   box-sizing: border-box;
   border: none;
   font-size: 1.3rem;
   padding-left: 1.5rem;
-  padding-bottom: 1rem;
+  padding-bottom: 3rem;
   box-shadow: inset 0px -3px 0px 0px rgba(187, 187, 187, 0.2);
   transition: box-shadow 0.2s ease-in;
 }
 
 .row input:focus {
-  box-shadow: inset 0px -3px 0px 0px rgba(34, 193, 195, 0.7);
+  box-shadow: inset 0px -3px 0px 0px #696969;
   outline: none;
 }
 
@@ -79,23 +96,20 @@ html {
 .row button {
   border-radius: 25px;
   width: 80%;
-  height: 40px;
+  height: 50px;
   font-size: 1.3rem;
   color: white;
   font-weight: 700;
-  background: rgb(34, 193, 195);
-  background: linear-gradient(
-    90deg,
-    rgba(34, 193, 195, 1) 0%,
-    rgba(253, 187, 45, 1) 100%
-  );
+  background: rgba(158, 158, 158, 1) 61%;
+
   border: 0px;
   cursor: pointer;
   transition: opacity 0.25s ease-out;
 }
 
 .row button:hover {
-  opacity: 0.8;
+  color: black;
+  background: #696969;
 }
 
 #button {
@@ -136,5 +150,10 @@ html {
 #alternativeLogin {
   text-align: center;
   padding-top: 2rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
+}
+
+.social {
+  font-size: 3em !important;
+  color: gray;
 }

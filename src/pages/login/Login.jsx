@@ -1,26 +1,32 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
-// FIXME: LOGIN PAGE
-// TODO: getLocalUser => localStorage
-// TODO: user & newUser
-// TODO: LougOut
-// TODO: REGISTER PAGE
+
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/auth/AuthContext";
 import { login } from "../../context/auth/apiCalls";
-import "./login.css";
-import { useHistory } from "react-router";
+import { useHistory, Link } from "react-router-dom";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import GoogleIcon from "@mui/icons-material/Google";
+import TwitterIcon from "@mui/icons-material/Twitter";
 
-const LoginPage = () => {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+import "./login.css";
+
+const RegisterPage = () => {
+  const [user, setUser] = useState({});
   const { isFetching, dispatch } = useContext(AuthContext);
   const history = useHistory();
 
+  const handleChange = ({ target }) => {
+    setUser({ ...user, [target.name]: target.value });
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
-
-    login({ username, password }, dispatch);
-    history.push("/");
+    if (user.hasOwnProperty("username") && user.hasOwnProperty("password")) {
+      login(user, dispatch);
+      history.push("/");
+    } else {
+      window.alert("Please fill in all of the fields");
+    }
   };
   return (
     <div className="login">
@@ -28,19 +34,22 @@ const LoginPage = () => {
         <h2 id="headerTitle">Login</h2>
         <div>
           <div className="row">
-            <label>Username</label>
+            <label>Username/Email</label>
             <input
+              name="username"
               type="text"
-              placeholder="Enter your username"
-              onChange={(e) => setUsername(e.target.value)}
+              placeholder="your username or email"
+              onChange={handleChange}
             />
           </div>
+
           <div className="row">
             <label>Password</label>
             <input
               type="password"
+              name="password"
               placeholder="Enter your password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleChange}
             />
           </div>
 
@@ -49,6 +58,12 @@ const LoginPage = () => {
               Log in
             </button>
           </div>
+          <div className="row">
+            <i> Don't have an account yet?</i>
+            <Link to="/register" style={{ color: "black" }}>
+              Sign up here
+            </Link>
+          </div>
         </div>
         <OtherMethods />
       </div>
@@ -56,15 +71,21 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
 
 const OtherMethods = (props) => (
   <div id="alternativeLogin">
-    <label>Or sign in with:</label>
+    <label>Or log in with:</label>
     <div id="iconGroup">
-      <a href="https://fb.com" id="facebookIcon" />
-      <a href="https://twitter.com" id="twitterIcon" />
-      <a href="https://google.com" id="googleIcon" />
+      <Link to="https://fb.com">
+        <FacebookIcon className="social" />
+      </Link>
+      <Link to="https://google.com">
+        <GoogleIcon className="social" />
+      </Link>
+      <Link to="https://twitter.com">
+        <TwitterIcon className="social" />
+      </Link>
     </div>
   </div>
 );
