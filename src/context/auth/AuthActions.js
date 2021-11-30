@@ -16,3 +16,18 @@ export const loginFailure = () => ({
 export const logoutStart = () => ({
   type: "LOGOUT",
 });
+
+export const registerStart = () => ({
+  type: "REGISTER_START",
+});
+
+export const registerSuccess = (user) => {
+  return {
+    type: "REGISTER_SUCCESS",
+    payload: user,
+  };
+};
+
+export const registerFailure = () => ({
+  type: "REGISTER_FAILURE",
+});

@@ -16,6 +16,7 @@ import Sidebar from "./components/sidebar/Sidebar";
 import Topbar from "./components/topbar/Topbar";
 import "./App.css";
 import Loader from "react-loader-spinner";
+import RegisterPage from "./pages/register/Register";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -23,17 +24,20 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route>{user ? <DefaultContainer /> : <LoginContainer />}</Route>
+        <Route>{user ? <DefaultContainer /> : <AuthContainer />}</Route>
       </Switch>
     </Router>
   );
 }
 
-const LoginContainer = () => {
+const AuthContainer = () => {
   return (
     <Router>
       <Switch>
         <LoginPage />
+      </Switch>
+      <Switch>
+        <RegisterPage path="/register" />
       </Switch>
     </Router>
   );
