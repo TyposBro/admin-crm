@@ -105,7 +105,7 @@ const UserFormCard = ({ userState }) => {
               />
             </div>
           ) : (
-            <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+            <Loader type="Puff" color="Grey" height={100} width={100} />
           )}
           <button onClick={handleSubmit} className="userUpdateButton">
             Update
