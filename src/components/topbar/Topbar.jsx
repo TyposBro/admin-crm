@@ -1,4 +1,7 @@
-import { NotificationsNone, Language, Settings } from "@material-ui/icons";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import LanguageIcon from "@mui/icons-material/Language";
+import SettingsIcon from "@mui/icons-material/Settings";
+
 import { Link } from "react-router-dom";
 import getLocalUser from "../../utils/check_jwt";
 import Dropdown from "../popover/Popover";
@@ -15,15 +18,15 @@ export default function Topbar() {
         </Link>
         <div className="topRight">
           <div className="topbarIconContainer">
-            <NotificationsNone />
+            <NotificationsNoneIcon />
             <span className="topIconBadge">2</span>
           </div>
           <div className="topbarIconContainer">
-            <Language />
+            <LanguageIcon />
             <span className="topIconBadge">2</span>
           </div>
           <div className="topbarIconContainer">
-            <Settings />
+            <SettingsIcon />
           </div>
           <Dropdown>
             <img src={user.avatar} alt="" className="topAvatar" />

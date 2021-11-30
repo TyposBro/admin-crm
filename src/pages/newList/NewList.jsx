@@ -4,7 +4,7 @@ import { createList } from "../../context/list/apiCalls";
 import { ListsContext } from "../../context/list/ListContext";
 import { MoviesContext } from "../../context/movie/MovieContext";
 import { getMovies } from "../../context/movie/apiCalls";
-import { DataGrid } from "@material-ui/data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import Loader from "react-loader-spinner";
 
 import "./newList.css";

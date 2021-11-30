@@ -1,7 +1,7 @@
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { updateMovie } from "../../context/movie/apiCalls";
 import { MoviesContext } from "../../context/movie/MovieContext";
-import { Publish } from "@material-ui/icons";
+import Publish from "@mui/icons-material/Publish";
 import { useContext, useState } from "react";
 import upload from "../../utils/firestoreUpload";
 import "./movie.css";

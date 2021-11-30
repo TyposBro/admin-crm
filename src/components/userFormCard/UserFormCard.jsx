@@ -5,7 +5,7 @@ import Loader from "react-loader-spinner";
 import upload from "../../utils/firestoreUpload";
 import { UsersContext } from "../../context/user/UserContext";
 import { updateUser } from "../../context/user/apiCalls";
-import { Publish } from "@material-ui/icons";
+import PublishIcon from "@mui/icons-material/Publish";
 
 import "./UserFormCard.css";
 
@@ -94,7 +94,7 @@ const UserFormCard = ({ userState }) => {
             <div className="userUpdateUpload">
               <img className="userUpdateImg" src={user.avatar} alt="" />
               <label htmlFor="avatar">
-                <Publish className="userUpdateIcon" />
+                <PublishIcon className="userUpdateIcon" />
               </label>
               <input
                 onChange={handleUpload}

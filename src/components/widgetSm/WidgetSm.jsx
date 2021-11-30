@@ -1,5 +1,5 @@
 import "./widgetSm.css";
-import { Visibility } from "@material-ui/icons";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../context/auth/AuthContext";
 import axios from "../../utils/axios";
@@ -51,7 +51,7 @@ export default function WidgetSm() {
                 </span>
               </div>
               <button className="widgetSmButton">
-                <Visibility className="widgetSmIcon" />
+                <VisibilityIcon className="widgetSmIcon" />
                 Display
               </button>
             </li>

@@ -1,8 +1,8 @@
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Popover from "@material-ui/core/Popover";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Popover from "@mui/material/Popover";
 import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 import "./popover.css";
 import { useHistory } from "react-router";
@@ -16,7 +16,7 @@ export default function Dropdown({ children }) {
   const logOut = () => {
     localStorage.removeItem("user");
     logout(dispatch);
-    history.push("/login");
+    history.push("/");
   };
 
   return (
