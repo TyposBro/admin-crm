@@ -1,0 +1,159 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:600|Work+Sans:400,500,600,700&display=swap");
+
+.login {
+  position: absolute;
+  width: 100vw;
+  background: rgb(211, 211, 211);
+  background: radial-gradient(
+    circle,
+    rgba(211, 211, 211, 1) 0%,
+    rgba(158, 158, 158, 1) 61%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  /* background: rgb(255, 255, 255);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(158, 158, 158, 1) 61%,
+    rgba(0, 0, 0, 1) 100%
+  ); */
+  font-family: "work sans";
+}
+
+html {
+  font-size: 100%;
+}
+
+#loginform {
+  max-width: 500px;
+  min-width: 300px;
+  max-height: 640px;
+  width: 30%;
+  height: 50%;
+  margin: 90px auto;
+  background-color: #ffffff;
+  border-radius: 25px;
+}
+
+#headerTitle {
+  text-align: center;
+  font-family: "open sans", sans-serif;
+  padding: 1.5rem 0;
+  margin: 0;
+  font-size: 2rem;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1rem;
+  max-width: 100%;
+}
+
+.row > a,
+.row > i {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  color: gray;
+  text-decoration: none;
+}
+.row input {
+  width: 80%;
+  box-sizing: border-box;
+  border: none;
+  font-size: 1.3rem;
+  padding-left: 1.5rem;
+  padding-bottom: 1rem;
+  box-shadow: inset 0px -3px 0px 0px rgba(187, 187, 187, 0.2);
+  transition: box-shadow 0.2s ease-in;
+}
+
+.row input:focus {
+  box-shadow: inset 0px -3px 0px 0px #696969;
+  outline: none;
+}
+
+.row input::-webkit-input-placeholder {
+  opacity: 1;
+  transition: opacity 0.25s ease-out;
+}
+
+.row input:hover::-webkit-input-placeholder,
+.row input:focus::-webkit-input-placeholder {
+  opacity: 0;
+}
+
+.row label {
+  align-self: start;
+  padding-left: 4.5rem;
+  padding-bottom: 0.5rem;
+  color: rgba(187, 187, 187, 0.9);
+}
+
+.row button {
+  border-radius: 25px;
+  width: 80%;
+  height: 40px;
+  font-size: 1.3rem;
+  color: white;
+  font-weight: 700;
+  background: rgba(158, 158, 158, 1) 61%;
+
+  border: 0px;
+  cursor: pointer;
+  transition: opacity 0.25s ease-out;
+}
+
+.row button:hover {
+  color: black;
+  background: #696969;
+}
+
+#button {
+  padding-bottom: 1.5rem;
+}
+
+#facebookIcon {
+  background-image: url("https://www.svgrepo.com/show/138943/facebook.svg");
+  background-repeat: no-repeat;
+  width: 3rem;
+  height: 3rem;
+}
+
+#twitterIcon {
+  background-image: url("https://www.svgrepo.com/show/126780/twitter.svg");
+  background-repeat: no-repeat;
+  width: 3rem;
+  height: 3rem;
+}
+
+#googleIcon {
+  background-image: url("https://www.svgrepo.com/show/223041/google.svg");
+  background-repeat: no-repeat;
+  width: 3rem;
+  height: 3rem;
+}
+
+#iconGroup {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 0;
+}
+
+#iconGroup a {
+  margin: 0 0.6rem;
+}
+
+#alternativeLogin {
+  text-align: center;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.social {
+  font-size: 3em !important;
+  color: gray;
+}
