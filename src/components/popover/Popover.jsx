@@ -5,13 +5,18 @@ import Button from "@material-ui/core/Button";
 import Popover from "@material-ui/core/Popover";
 import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 import "./popover.css";
-import { useState } from "react";
+import { useHistory } from "react-router";
+import { useContext } from "react";
+import { AuthContext } from "../../context/auth/AuthContext";
+import { logout } from "../../context/auth/apiCalls";
 
 export default function Dropdown({ children }) {
-  const [foo, setFoo] = useState(false);
-  const logout = () => {
+  const history = useHistory();
+  const { dispatch } = useContext(AuthContext);
+  const logOut = () => {
     localStorage.removeItem("user");
-    setFoo(true);
+    logout(dispatch);
+    history.push("/login");
   };
 
   return (
@@ -30,7 +35,7 @@ export default function Dropdown({ children }) {
               horizontal: "center",
             }}
           >
-            <Box p={2} onClick={logout()}>
+            <Box p={2} onClick={logOut}>
               <Typography>
                 <ExitToAppIcon className="icon" />
                 <span className="text">Sign out</span>

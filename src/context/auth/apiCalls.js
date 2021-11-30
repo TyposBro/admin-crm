@@ -1,7 +1,12 @@
 import axios from "../../utils/axios";
 // import axios from "axios";
 
-import { loginFailure, loginStart, loginSuccess } from "./AuthActions";
+import {
+  loginFailure,
+  loginStart,
+  loginSuccess,
+  logoutStart,
+} from "./AuthActions";
 
 export const login = async (user, dispatch) => {
   dispatch(loginStart());
@@ -14,4 +19,8 @@ export const login = async (user, dispatch) => {
     dispatch(loginFailure());
     return false;
   }
+};
+
+export const logout = (dispatch) => {
+  dispatch(logoutStart());
 };
