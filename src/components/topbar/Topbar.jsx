@@ -1,9 +1,12 @@
 import { NotificationsNone, Language, Settings } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import getLocalUser from "../../utils/check_jwt";
 import Dropdown from "../popover/Popover";
 import "./topbar.css";
 
-export default function Topbar({ user }) {
+export default function Topbar() {
+  const user = getLocalUser().info;
+  console.log(user);
   return (
     <div className="topbar">
       <div className="topbarWrapper">

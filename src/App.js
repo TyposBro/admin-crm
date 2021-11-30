@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./context/auth/AuthContext";
 import Home from "./pages/home/Home";
 import UserList from "./pages/userList/UserList";
@@ -15,6 +15,7 @@ import NewList from "./pages/newList/NewList";
 import Sidebar from "./components/sidebar/Sidebar";
 import Topbar from "./components/topbar/Topbar";
 import "./App.css";
+import Loader from "react-loader-spinner";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -22,9 +23,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route>
-          {user ? <DefaultContainer user={user} /> : <LoginContainer />}
-        </Route>
+        <Route>{user ? <DefaultContainer /> : <LoginContainer />}</Route>
       </Switch>
     </Router>
   );
@@ -40,10 +39,16 @@ const LoginContainer = () => {
   );
 };
 
-const DefaultContainer = ({ user }) => {
-  return (
+const DefaultContainer = () => {
+  const [render, setRender] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setRender(true);
+    }, 3000);
+  });
+  return render ? (
     <Router>
-      <Topbar user={user.info} />
+      <Topbar />
       <div className="container">
         <Sidebar />
         <Switch>
@@ -81,6 +86,10 @@ const DefaultContainer = ({ user }) => {
         </Switch>
       </div>
     </Router>
+  ) : (
+    <div className="loader">
+      <Loader type="Circles" color="Grey" height={100} width={100} />
+    </div>
   );
 };
 
