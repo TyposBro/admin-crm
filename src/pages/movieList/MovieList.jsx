@@ -41,7 +41,14 @@ export default function MovieList() {
     { field: "genre", headerName: "Genre", width: 120 },
     { field: "year", headerName: "Year", width: 120 },
     { field: "limit", headerName: "Age Limit", width: 120 },
-    { field: "isSeries", headerName: "isSeries", width: 120 },
+    {
+      field: "isSeries",
+      headerName: "Type",
+      width: 120,
+      renderCell: (params) => {
+        return params.row.isSeries ? "Series" : "Movie";
+      },
+    },
     {
       field: "action",
       headerName: "Action",
