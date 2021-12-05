@@ -1,25 +1,83 @@
 import "./newUser.css";
+import { useContext, useState } from "react";
+import { UsersContext } from "../../context/user/UserContext";
+import { createUser } from "../../context/user/apiCalls";
+import { useHistory } from "react-router";
 
 export default function NewUser() {
+  const { dispatch } = useContext(UsersContext);
+  const [user, setUser] = useState({});
+  const history = useHistory();
+
+  const handleChange = ({ target }) => {
+    setUser({ ...user, [target.name]: target.value });
+    console.log(user);
+  };
+
+  const check = () => {
+    const props = ["username", "email", "fullname", "password", "isAdmin"];
+    for (let i = 0; i < props.length; i++) {
+      if (!user.hasOwnProperty(props[i])) {
+        window.alert("Please fill in the " + props[i] + "");
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (check()) {
+      const res = await createUser(user, dispatch);
+      if (res) {
+        history.push("/users");
+      } else {
+        history.push("/newUser");
+      }
+    }
+  };
+
   return (
     <div className="newUser">
       <h1 className="newUserTitle">New User</h1>
       <form className="newUserForm">
         <div className="newUserItem">
           <label>Username</label>
-          <input type="text" placeholder="john" />
+          <input
+            onChange={handleChange}
+            name="username"
+            type="text"
+            placeholder="john"
+          />
         </div>
         <div className="newUserItem">
           <label>Full Name</label>
-          <input type="text" placeholder="John Smith" />
+          <input
+            type="text"
+            onChange={handleChange}
+            name="fullname"
+            placeholder="John Smith"
+          />
         </div>
         <div className="newUserItem">
           <label>Email</label>
-          <input type="email" placeholder="john@gmail.com" />
+          <input
+            onChange={handleChange}
+            name="email"
+            type="email"
+            placeholder="john@gmail.com"
+          />
         </div>
         <div className="newUserItem">
           <label>Password</label>
-          <input type="password" placeholder="password" />
+          <input
+            onChange={handleChange}
+            autoComplete="current-password"
+            name="password"
+            type="password"
+            placeholder="password"
+          />
         </div>
         <div className="newUserItem">
           <label>Phone</label>
@@ -30,24 +88,17 @@ export default function NewUser() {
           <input type="text" placeholder="New York | USA" />
         </div>
         <div className="newUserItem">
-          <label>Gender</label>
-          <div className="newUserGender">
-            <input type="radio" name="gender" id="male" value="male" />
-            <label for="male">Male</label>
-            <input type="radio" name="gender" id="female" value="female" />
-            <label for="female">Female</label>
-            <input type="radio" name="gender" id="other" value="other" />
-            <label for="other">Other</label>
+          <label>Status</label>
+          <div onChange={handleChange} className="newUserGender">
+            <input type="radio" name="isAdmin" id="user" value={false} />
+            <label htmlFor="user">User</label>
+            <input type="radio" name="isAdmin" id="admin" value={true} />
+            <label htmlFor="admin">Admin</label>
           </div>
         </div>
-        <div className="newUserItem">
-          <label>Active</label>
-          <select className="newUserSelect" name="active" id="active">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-        </div>
-        <button className="newUserButton">Create</button>
+        <button onClick={handleSubmit} className="newUserButton">
+          Create
+        </button>
       </form>
     </div>
   );

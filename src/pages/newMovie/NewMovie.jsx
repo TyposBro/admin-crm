@@ -3,6 +3,7 @@ import upload from "../../utils/firestoreUpload";
 import { createMovie } from "../../context/movie/apiCalls";
 import { MoviesContext } from "../../context/movie/MovieContext";
 import "./newMovie.css";
+import { useHistory } from "react-router";
 
 export default function NewMovie() {
   const { dispatch } = useContext(MoviesContext);
@@ -13,6 +14,7 @@ export default function NewMovie() {
   const [trailer, setTrailer] = useState(null);
   const [video, setVideo] = useState(null);
   const [ready, setReady] = useState(false);
+  const history = useHistory();
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -22,6 +24,7 @@ export default function NewMovie() {
   const handleSubmit = (e) => {
     e.preventDefault();
     createMovie(movie, dispatch);
+    history.push("/movies");
   };
 
   const handleUpload = (e) => {
@@ -129,8 +132,8 @@ export default function NewMovie() {
         <div className="addProductItem">
           <label>Is Series?</label>
           <select id="isSeries" name="isSeries" onChange={handleChange}>
-            <option value="false">No</option>
-            <option value="true">Yes</option>
+            <option value={false}>No</option>
+            <option value={true}>Yes</option>
           </select>
         </div>
         <div className="addProductItem">
