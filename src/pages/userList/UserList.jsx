@@ -33,7 +33,11 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <div className="userListUser">
-            <img className="userListImg" src={params.row.avatar} alt="" />
+            <img
+              className="userListImg"
+              src={params.row.avatar || "/img/anonymous.png"}
+              alt=""
+            />
             {params.row.username}
           </div>
         );
@@ -76,13 +80,7 @@ export default function UserList() {
   return (
     <div className="userList">
       {spinner ? (
-        <Loader
-          type="Puff"
-          color="Grey"
-          height={100}
-          width={100}
-          // timeout={3000} //3 secs
-        />
+        <Loader type="Puff" color="Grey" height={100} width={100} />
       ) : (
         <DataGrid
           rows={users}
