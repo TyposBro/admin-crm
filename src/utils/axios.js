@@ -1,5 +1,5 @@
 import Axios from "axios";
 
 export default Axios.create({
-  baseURL: "http://localhost:3001/api",
+  baseURL: "https://limitless-basin-11774.herokuapp.com/api",
 });
