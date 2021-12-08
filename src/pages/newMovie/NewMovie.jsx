@@ -8,38 +8,36 @@ import { useHistory } from "react-router";
 export default function NewMovie() {
   const { dispatch } = useContext(MoviesContext);
   const [movie, setMovie] = useState({});
-  const [img, setImg] = useState(null);
-  const [imgSmall, setImgSmall] = useState(null);
-  const [imgTitle, setImgTitle] = useState(null);
-  const [trailer, setTrailer] = useState(null);
-  const [video, setVideo] = useState(null);
+  // const [img, setImg] = useState(null);
+  // const [imgSmall, setImgSmall] = useState(null);
+  // const [imgTitle, setImgTitle] = useState(null);
+  // const [trailer, setTrailer] = useState(null);
+  // const [video, setVideo] = useState(null);
   const [ready, setReady] = useState(false);
   const history = useHistory();
+  const [media, setMedia] = useState([]);
+  const [isDisabled, setDisabled] = useState(false);
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setMovie({ ...movie, [e.target.name]: value });
+  const handleMediaChange = ({ target }) => {
+    setMedia([...media, { label: target.name, file: target.files[0] }]);
+  };
+
+  const handleChange = ({ target }) => {
+    setMovie({ ...movie, [target.name]: target.value });
+    console.log(movie);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(movie);
     createMovie(movie, dispatch);
     history.push("/movies");
   };
 
   const handleUpload = (e) => {
     e.preventDefault();
-    upload(
-      [
-        { file: img, label: "img" },
-        { file: imgTitle, label: "imgTitle" },
-        { file: imgSmall, label: "imgSmall" },
-        { file: trailer, label: "trailer" },
-        { file: video, label: "video" },
-      ],
-      setMovie,
-      setReady
-    );
+    setDisabled(true);
+    upload(media, setMovie, setReady);
   };
 
   return (
@@ -48,12 +46,7 @@ export default function NewMovie() {
       <form className="addProductForm">
         <div className="addProductItem">
           <label>Image</label>
-          <input
-            type="file"
-            id="img"
-            name="img"
-            onChange={(e) => setImg(e.target.files[0])}
-          />
+          <input type="file" id="img" name="img" onChange={handleMediaChange} />
         </div>
         <div className="addProductItem">
           <label>Title image</label>
@@ -61,7 +54,7 @@ export default function NewMovie() {
             type="file"
             id="imgTitle"
             name="imgTitle"
-            onChange={(e) => setImgTitle(e.target.files[0])}
+            onChange={handleMediaChange}
           />
         </div>
         <div className="addProductItem">
@@ -70,7 +63,7 @@ export default function NewMovie() {
             type="file"
             id="imgSmall"
             name="imgSmall"
-            onChange={(e) => setImgSmall(e.target.files[0])}
+            onChange={handleMediaChange}
           />
         </div>
         <div className="addProductItem">
@@ -130,34 +123,36 @@ export default function NewMovie() {
         </div>
 
         <div className="addProductItem">
-          <label>Is Series?</label>
-          <select id="isSeries" name="isSeries" onChange={handleChange}>
-            <option value={false}>No</option>
-            <option value={true}>Yes</option>
+          <label>Type</label>
+          <select
+            value={movie.isSeries}
+            id="isSeries"
+            name="isSeries"
+            onChange={handleChange}
+          >
+            <option></option>
+            <option value={false}>Movie</option>
+            <option value={true}>Series</option>
           </select>
         </div>
         <div className="addProductItem">
           <label>Trailer</label>
-          <input
-            type="file"
-            name="trailer"
-            onChange={(e) => setTrailer(e.target.files[0])}
-          />
+          <input type="file" name="trailer" onChange={handleMediaChange} />
         </div>
         <div className="addProductItem">
           <label>Video</label>
-          <input
-            type="file"
-            name="video"
-            onChange={(e) => setVideo(e.target.files[0])}
-          />
+          <input type="file" name="video" onChange={handleMediaChange} />
         </div>
         {ready ? (
           <button className="addProductButton" onClick={handleSubmit}>
             Create
           </button>
         ) : (
-          <button className="addProductButton" onClick={handleUpload}>
+          <button
+            disabled={isDisabled}
+            className="addProductButton"
+            onClick={handleUpload}
+          >
             Upload
           </button>
         )}

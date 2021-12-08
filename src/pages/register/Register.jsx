@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
-// TODO:newUser
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/auth/AuthContext";
 import { register } from "../../context/auth/apiCalls";

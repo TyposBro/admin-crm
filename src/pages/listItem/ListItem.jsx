@@ -26,7 +26,12 @@ export default function ListItem() {
       headerName: "Title",
       width: 250,
       renderCell: ({ row }) => {
-        return <div className="productListItem">{row.title}</div>;
+        return (
+          <div className="productListItem">
+            <img className="productListImg" src={row.img} alt="" />
+            {row.title}
+          </div>
+        );
       },
     },
     { field: "genre", headerName: "Genre", width: 150 },
@@ -113,26 +118,25 @@ export default function ListItem() {
               onChange={handleChange}
             />
           </div>
+
           <div className="productFormLeft">
             <label>Type</label>
-            <input
-              type="text"
+            <select
+              value={list.type}
+              id="type"
               name="type"
-              placeholder={list.type}
               onChange={handleChange}
-            />
+            >
+              <option></option>
+              <option value="Movies">Movies</option>
+              <option value="Series">Series</option>
+            </select>
           </div>
         </form>
       </div>
       <div className="tableContainer" style={{ maxWidth: "100%" }}>
         {spinner ? (
-          <Loader
-            type="Puff"
-            color="Grey"
-            height={100}
-            width={100}
-            // timeout={3000} //3 secs
-          />
+          <Loader type="Puff" color="Grey" height={100} width={100} />
         ) : (
           <DataGrid
             rows={movies}

@@ -45,7 +45,12 @@ export default function NewList() {
       headerName: "Title",
       width: 250,
       renderCell: ({ row }) => {
-        return <div className="productListItem">{row.title}</div>;
+        return (
+          <div className="productListItem">
+            <img className="productListImg" src={row.img} alt="" />
+            {row.title}
+          </div>
+        );
       },
     },
     { field: "genre", headerName: "Genre", width: 150 },
@@ -85,7 +90,13 @@ export default function NewList() {
         </div>
         <div className="addProductItem">
           <label>Type</label>
-          <select id="type" name="type" onChange={handleChange}>
+          <select
+            value={list.type}
+            id="type"
+            name="type"
+            onChange={handleChange}
+          >
+            <option></option>
             <option value="Movies">Movies</option>
             <option value="Series">Series</option>
           </select>
