@@ -26,6 +26,7 @@ const UserFormCard = ({ userState }) => {
   };
 
   const handleSubmit = async (e) => {
+    console.log(user);
     e.preventDefault();
 
     const res = await updateUser(user, dispatch);
@@ -72,16 +73,7 @@ const UserFormCard = ({ userState }) => {
               onChange={handleChange}
             />
           </div>
-          <div className="userUpdateItem">
-            <label>Password</label>
-            <input
-              name="password"
-              type="text"
-              placeholder={user.password}
-              className="userUpdateInput"
-              onChange={handleChange}
-            />
-          </div>
+
           <div className="userUpdateItem">
             <label>Phone</label>
             <input
