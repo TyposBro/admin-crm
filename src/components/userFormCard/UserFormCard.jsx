@@ -26,7 +26,7 @@ const UserFormCard = ({ userState }) => {
   };
 
   const handleSubmit = async (e) => {
-    console.log(user);
+
     e.preventDefault();
 
     const res = await updateUser(user, dispatch);

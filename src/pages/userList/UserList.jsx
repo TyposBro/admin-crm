@@ -10,6 +10,7 @@ import Loader from "react-loader-spinner";
 export default function UserList() {
   const { users, dispatch } = useContext(UsersContext);
   const [spinner, setSpinner] = useState(true);
+  const [pageSize, setPageSize] = useState(8);
 
   useEffect(() => {
     getUsers(dispatch);
@@ -86,7 +87,9 @@ export default function UserList() {
           rows={users}
           disableSelectionOnClick
           columns={columns}
-          pageSize={8}
+          pageSize={pageSize}
+          rowsPerPageOptions={[5, 8, 10, 50]}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
           checkboxSelection
           getRowId={(r) => r._id}
         />

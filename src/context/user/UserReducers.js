@@ -32,9 +32,6 @@ const usersReducer = (state, action) => {
     case "UPDATE_USER_SUCCESS":
       return {
         users: state.users.map((user) => {
-          console.log("userId:", user._id);
-          console.log("PayloadID:", action.payload._id);
-
           return user._id === action.payload._id && action.payload;
         }),
         isFetching: false,

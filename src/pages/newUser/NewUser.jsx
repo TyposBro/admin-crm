@@ -11,7 +11,6 @@ export default function NewUser() {
 
   const handleChange = ({ target }) => {
     setUser({ ...user, [target.name]: target.value });
-    console.log(user);
   };
 
   const check = () => {

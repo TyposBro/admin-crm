@@ -3,7 +3,7 @@ import { storage } from "./firebase.js";
 
 const upload = (items, setState, setReady) => {
   setReady(false);
-  console.log(items);
+
   items.forEach((item) => {
     const storageRef = ref(storage, `${item.label}/${item.file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, item.file);

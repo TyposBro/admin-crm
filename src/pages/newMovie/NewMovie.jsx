@@ -24,12 +24,11 @@ export default function NewMovie() {
 
   const handleChange = ({ target }) => {
     setMovie({ ...movie, [target.name]: target.value });
-    console.log(movie);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(movie);
+
     createMovie(movie, dispatch);
     history.push("/movies");
   };

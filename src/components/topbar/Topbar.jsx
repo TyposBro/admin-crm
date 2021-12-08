@@ -9,7 +9,6 @@ import "./topbar.css";
 
 export default function Topbar() {
   const user = getLocalUser().info;
-  console.log(user);
   return (
     <div className="topbar">
       <div className="topbarWrapper">
